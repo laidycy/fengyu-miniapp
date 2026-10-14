@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/admin/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>丰鱼天下 - 管理后台</title>
+    <script type="module" crossorigin src="/admin/assets/index-C3jj-K2p.js"></script>
+    <link rel="stylesheet" crossorigin href="/admin/assets/index-B56_9Q-n.css">
+    <link rel="stylesheet" href="/admin/assets/fytx-theme.css">
+    <!-- 修正「渔获订单-收款」列「生成付款码」按钮配色，对齐「订单管理-操作」列的确认按钮（绿渐变实心） -->
+    <style>
+      /* 去掉 ghost 变体，套用与 ant-btn-primary 一致的绿渐变实心样式 */
+      .ant-btn.fytx-pay-btn,
+      .ant-btn.fytx-pay-btn:hover,
+      .ant-btn.fytx-pay-btn:focus {
+        background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%) !important;
+        border-color: #2E7D32 !important;
+        color: #fff !important;
+      }
+      .ant-btn.fytx-pay-btn:hover {
+        filter: brightness(0.94);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- 图标操作：隐藏"快速操作"卡，替换为安卓管理端 App 下载二维码（仅首页仪表盘） -->
+    <script>
+      (function () {
+        var APK_URL = 'https://YOUR-API-DOMAIN/uploads/dl/fengyu-guanli-V0.0.5-release.apk';
+        var QR_URL = 'https://YOUR-API-DOMAIN/uploads/dl/fengyu-guanli-V0.0.5-qr.png';
+
+        function isHome() {
+          var p = location.pathname.replace(/\/+$/, '');
+          return p === '' || p === '/' || p === '/admin' || p === '/index' || p === '/admin/index';
+        }
+
+        // 找到"快速操作"卡片
+        function findQuickCard() {
+          var heads = document.querySelectorAll('.ant-card-head-title, .ant-card-head');
+          for (var i = 0; i < heads.length; i++) {
+            if ((heads[i].innerText || '').indexOf('快速操作') !== -1) {
+              return heads[i].closest('.ant-card');
+            }
+          }
+          return null;
+        }
+
+        function buildCardCol() {
+          var col = document.createElement('div');
+          col.id = 'fytx-apkqr';
+          col.className = 'ant-col ant-col-xs-24 ant-col-lg-8 css-mncuj7';
+          col.innerHTML = [
+            '<style>',
+            '#fytx-apkqr .fytx-card{background:#fff;border:1px solid #f0f0f0;border-radius:8px;height:100%;}',
+            '#fytx-apkqr .fytx-head{padding:14px 20px;border-bottom:1px solid #f0f0f0;font-size:16px;font-weight:600;color:rgba(0,0,0,.88);}',
+            '#fytx-apkqr .fytx-body{padding:20px;display:flex;flex-direction:column;align-items:center;text-align:center;}',
+            '#fytx-apkqr .fytx-qr{width:150px;height:150px;border:1px solid #eee;border-radius:8px;background:#fff;}',
+            '#fytx-apkqr .fytx-desc{font-size:13px;color:#6b7280;line-height:1.6;margin-top:12px;}',
+            '#fytx-apkqr .fytx-desc b{color:#0F4A16;}',
+            '#fytx-apkqr .fytx-dl{display:inline-block;margin-top:12px;font-size:13px;color:#fff;background:#0F4A16;text-decoration:none;padding:7px 20px;border-radius:6px;font-weight:600;}',
+            '#fytx-apkqr .fytx-dl:hover{background:#0c3d12;}',
+            '</style>',
+            '<div class="fytx-card">',
+            '<div class="fytx-head">📱 安卓管理端 App 下载</div>',
+            '<div class="fytx-body">',
+            '<img class="fytx-qr" src="' + QR_URL + '" alt="丰鱼管理 App 下载二维码">',
+            '<div class="fytx-desc">扫码安装 <b>丰鱼管理 V0.0.5</b>（安卓）<br>用于渔获录入、订单核销等现场作业</div>',
+            '<a class="fytx-dl" href="' + APK_URL + '" target="_blank" rel="noopener">点击直接下载 APK</a>',
+            '</div>',
+            '</div>'
+          ].join('');
+          return col;
+        }
+
+        function sync() {
+          if (!isHome()) {
+            var old = document.getElementById('fytx-apkqr');
+            if (old) old.remove();
+            return;
+          }
+          if (document.getElementById('fytx-apkqr')) return; // 已就位
+
+          var quick = findQuickCard();
+          if (!quick) return;
+
+          // 用二维码卡替换"快速操作"卡（保持同一列位置/宽度）
+          var quickCol = quick.closest('.ant-col') || quick;
+          var col = buildCardCol();
+          quickCol.parentNode.insertBefore(col, quickCol);
+          // 隐藏原"快速操作"卡（不删除，避免影响 React）
+          quick.style.display = 'none';
+          if (quickCol !== quick) quickCol.style.display = 'none';
+        }
+
+        // 给「渔获订单-收款」列的「生成付款码」按钮打标记，统一为实心绿（见 head 内 CSS）
+        function tagPayButtons() {
+          var btns = document.querySelectorAll('button.ant-btn-background-ghost');
+          for (var i = 0; i < btns.length; i++) {
+            var b = btns[i];
+            if ((b.innerText || '').indexOf('生成付款码') !== -1 && !b.classList.contains('fytx-pay-btn')) {
+              b.classList.add('fytx-pay-btn');
+            }
+          }
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', sync);
+        } else {
+          sync();
+        }
+
+        var wrap = function (type) {
+          var orig = history[type];
+          return function () {
+            var rv = orig.apply(this, arguments);
+            window.dispatchEvent(new Event('fytx-loc'));
+            return rv;
+          };
+        };
+        history.pushState = wrap('pushState');
+        history.replaceState = wrap('replaceState');
+        window.addEventListener('popstate', function () { setTimeout(sync, 60); });
+        window.addEventListener('fytx-loc', function () { setTimeout(sync, 60); });
+        setInterval(function () { sync(); tagPayButtons(); }, 800);
+        try {
+          new MutationObserver(function () { if (isHome()) sync(); tagPayButtons(); })
+            .observe(document.body, { childList: true, subtree: true });
+        } catch (e) {}
+      })();
+    </script>
+  <script src="gear-settle.js"></script>
+  <script src="bt-scale.js"></script>
+  </body>
+</html>

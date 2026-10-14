@@ -1,49 +1,100 @@
-# 丰鱼天下 · 微信小程序（C 端预约端）
+# 丰鱼天下 · 水库垂钓预约平台
 
-水库/钓场垂钓预约小程序：预约钓位、渔获结算、会员体系、渔具租赁登记。
+一套完整的水库/钓场预约业务系统，C 端微信小程序 + 安卓管理 App + Web 管理后台。
 
-技术栈：**Taro 4 + React 18 + TypeScript**（编译为微信小程序）。
+> ⚠️ **本仓库已脱敏开源**：后端域名、微信 AppID、客服电话、管理端二维码均已替换为占位符或打码。
+> 部署前需替换的位置见各子项目的 README。
 
-> 本仓库已脱敏：域名 / 微信 AppID / 客服电话均已替换为占位符，见下方「部署前需替换的位置」。
+## 功能概览
 
-## 快速开始
+- **预约**：按日期 + 时段（早场/午场/晚场/全天）预约钓位，微信手机号快捷登录
+- **渔获**：现场称重大小（支持蓝牙电子秤直连读数）、按会员等级计价（带走/回收）、福利额度、排行榜
+- **渔具租赁**：客户预约时登记渔具需求（鱼竿/鱼饵/抄网/救生衣等），场地方现场结算
+- **会员**：普通/银卡/金卡/钻石，积分、折扣、等级权益
+- **管理端**：订单管理、会员管理、渔获订单、公告、价格设置、兑换码（小程序码批量生成）、财务统计
+
+## 仓库结构
+
+```
+├── miniapp/      微信小程序 · C 端预约（Taro 4 + React 18 + TypeScript）
+├── field-app/    安卓管理 App（Flutter / Dart）· 场地方现场管理
+└── admin-web/    Web 管理后台（Vite + React 构建产物）
+```
+
+## 界面预览
+
+### 微信小程序（C 端）
+
+| 预约渔具租赁 | 个人中心 |
+|---|---|
+| ![](docs/screenshots/miniapp_booking.jpg) | ![](docs/screenshots/miniapp_profile.png) |
+
+### 安卓管理 App（场地方）
+
+| 登录 | 渔获录入 | 蓝牙秤读数 |
+|---|---|---|
+| ![](docs/screenshots/app_login.png) | ![](docs/screenshots/app_catch.png) | ![](docs/screenshots/app_scale.png) |
+
+<details>
+<summary>蓝牙秤真机实测（App + 电子秤同框）</summary>
+
+![](docs/screenshots/app_scale_real.jpg)
+</details>
+
+### Web 管理后台
+
+| 仪表盘 | 订单管理 | 渔获订单 |
+|---|---|---|
+| ![](docs/screenshots/admin_dashboard.png) | ![](docs/screenshots/admin_orders.png) | ![](docs/screenshots/admin_catch.png) |
+
+> 说明：演示截图中涉及真实用户信息（昵称/手机号/会员号）的部分已做马赛克处理；
+> 仪表盘中的 App 下载二维码已打码（其中编码的是线上环境下载地址）。
+
+## 各端快速开始
+
+### 1. 微信小程序（miniapp/）
 
 ```bash
+cd miniapp
 npm install
-npm run dev:weapp        # 开发（微信开发者工具导入本目录，dist/ 为产物目录）
-npm run build:weapp      # 生产构建
+npm run dev:weapp     # 微信开发者工具导入本目录
 ```
 
-微信开发者工具导入时，`project.config.json` 的 `appid` 需改成你自己在微信公众平台申请的小程序 AppID。
+部署前替换 `src/utils/config.ts` 的 `YOUR-API-DOMAIN`、`wx0000000000000000`，详见 `miniapp/README.md`。
 
-## 部署前需替换的位置
+### 2. 安卓管理 App（field-app/）
 
-| 文件 | 占位符 | 替换为 |
-|---|---|---|
-| `src/utils/config.ts` | `YOUR-API-DOMAIN` | 后端 API 域名（不含 `/api` 前缀，各接口路径自带 `/api`） |
-| `src/utils/config.ts` | `wx0000000000000000` | 你的小程序 AppID |
-| `project.config.json` | `wx0000000000000000` | 同上（微信开发者工具用） |
-| `src/pages/BookingPage/index.tsx`、`src/pages/ProfilePage/index.tsx` 等 | `13800000000` | 你的客服电话号码 |
-
-另外 `src/utils/config.ts` 里的 `RESERVOIR_LOCATION`（水库坐标/地址/简介）为示例业务数据，按实际钓场修改。
-
-## 目录结构
-
-```
-src/
-  pages/          页面（预约、订单、渔获、会员、管理端内嵌页等）
-  components/     通用组件
-  utils/          请求封装、登录、API 模块、全局配置(config.ts)
-  hooks/          自定义 hooks
-  styles/         全局样式
-  assets/         图片资源
-config/           Taro 构建配置
+```bash
+cd field-app
+flutter pub get
+flutter run
 ```
 
-## 后端接口约定
+部署前替换 `lib/config.dart` 的 `YOUR-API-DOMAIN`（后端 API 地址），并自行配置 Android 签名
+（`android/app/build.gradle.kts` 的 signingConfigs 已注释，构建前需填入你自己的 keystore）。
 
-- 请求路径统一带 `/api` 前缀（`API_BASE_URL` 不含 `/api`）
-- 登录：`wx.login()` 取 code → 后端换 openid/token（静默登录，不弹窗）
+### 3. Web 管理后台（admin-web/）
+
+`admin-web/` 为**构建产物**（Vite + React 打包后的静态文件，含 `dist` 目录结构：
+`index.html` + `assets/` + 蓝牙秤/渔具结算等注入脚本），直接放到任意静态服务器即可：
+
+```bash
+npx serve admin-web     # 或 nginx/caddy 指向该目录
+```
+
+> 本仓库未包含管理后台的前端源码（历史原因，早期以单文件注入方式迭代）；
+> 构建产物内已脱敏（`index.html` 中 App 下载链接/二维码地址已替换为 `YOUR-API-DOMAIN`）。
+
+## 后端
+
+后端 API（Node.js + Express + TypeScript + MySQL + 微信支付 APIv3）**未包含在本仓库**，
+各前端通过 `YOUR-API-DOMAIN/api/*` 调用。
+
+## 安全与合规
+
+- 微信登录：`wx.login()` code → 后端换 openid/token（静默登录，不弹窗）
+- 管理端登录：账号密码 + token 会话
+- 演示数据均为测试环境数据
 
 ## License
 

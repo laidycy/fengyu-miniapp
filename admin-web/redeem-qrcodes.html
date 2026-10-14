@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>兑换码·小程序码批量生成</title>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system,'PingFang SC','Microsoft Yahei',sans-serif; background: #f5f6fa; color: #333; padding: 24px; }
+  .topbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+  h1 { font-size: 20px; color: #2E7D32; }
+  .controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  select, button { font-size: 14px; padding: 8px 14px; border-radius: 6px; border: 1px solid #ccc; background: #fff; cursor: pointer; }
+  button.primary { background: #2E7D32; color: #fff; border-color: #2E7D32; }
+  button.primary:hover { background: #1B5E20; }
+  button.secondary { background: #fff; }
+  select { min-width: 240px; }
+  .meta { font-size: 12px; color: #999; margin-bottom: 16px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, 220px); gap: 16px; }
+  .card { background: #fff; border-radius: 10px; padding: 14px; box-shadow: 0 2px 6px rgba(0,0,0,.07); display: flex; flex-direction: column; align-items: center; }
+  .card img { width: 180px; height: 180px; display: block; }
+  .card .code { font-family: Menlo,Consolas,monospace; font-weight: 700; font-size: 14px; letter-spacing: 1px; margin: 10px 0 4px; text-align: center; }
+  .card .sub { font-size: 11px; color: #bbb; margin-bottom: 8px; }
+  .card .actions { display: flex; gap: 8px; }
+  .card a.dl { font-size: 12px; color: #2E7D32; text-decoration: none; border: 1px solid #2E7D32; padding: 4px 10px; border-radius: 4px; }
+  .card a.dl:hover { background: #e8f5e9; }
+  .err { color: #e53935; font-size: 13px; }
+  .loading { text-align: center; padding: 40px; color: #999; }
+  .empty { text-align: center; padding: 40px; color: #bbb; }
+  .zipbar { margin: 4px 0 16px; }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <h1>🎁 兑换码 · 小程序码批量生成</h1>
+    <div class="controls">
+      <a href="/" style="font-size:13px;color:#2E7D32;text-decoration:none;">← 返回后台</a>
+    </div>
+  </div>
+
+  <div class="controls" style="margin-bottom:8px;">
+    <label style="font-size:14px;">选择批次：</label>
+    <select id="batchSel"><option value="">加载批次中…</option></select>
+    <button class="primary" id="genBtn">生成该批小程序码</button>
+    <button class="secondary" id="zipBtn" style="display:none;">⬇ 打包 ZIP 下载全部</button>
+  </div>
+  <div class="meta zipbar" id="meta">&nbsp;</div>
+
+  <div id="area">
+    <div class="empty">请先选择批次，再点击「生成该批小程序码」。<br><br>说明：小程序码需「扫码进入的兑换页」已发布到线上正式版才能生成，若提示页面未发布请先发布。</div>
+  </div>
+
+  <script>
+  var TOKEN = localStorage.getItem('admin_token') || '';
+  var area = document.getElementById('area');
+  var batchSel = document.getElementById('batchSel');
+  var meta = document.getElementById('meta');
+  var states = []; // {code, qr, ok, error}
+
+  async function api(path, opts) {
+    var o = opts || {};
+    var r = await fetch('/api' + path, {
+      method: o.method || 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + TOKEN
+      },
+      body: o.body ? JSON.stringify(o.body) : undefined
+    });
+    var j = await r.json().catch(function(){ return {}; });
+    if (r.status === 401) {
+      alert('登录已失效，请重新登录');
+      location.href = '/';
+      return Promise.reject(new Error('unauth'));
+    }
+    if (j.code !== 0 && j.code !== 200) throw new Error(j.message || '请求失败');
+    return j.data;
+  }
+
+  async function loadBatches() {
+    try {
+      var d = await api('/admin/redeem-codes/batches');
+      var list = d || [];
+      batchSel.innerHTML = '<option value="">请选择批次 (共' + list.length + '批)</option>' +
+        list.map(function(b){ return '<option value="'+b.batch_no+'">'+b.batch_no+'（未用 '+b.unused+' / 总 '+b.total+'）</option>'; }).join('');
+      if (list.length) batchSel.disabled = false;
+    } catch(e) {
+      batchSel.innerHTML = '<option value="">批次加载失败</option>';
+    }
+  }
+
+  function esc(s){ return String(s||'').replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+  function renderCards() {
+    var ok = states.filter(function(s){return s.ok;}).length;
+    meta.innerHTML = '共 ' + states.length + ' 个兑换码，成功 ' + ok + ' 个' +
+      (states.length?'（点每张下方可单独下载；或用 ZIP 打包全部）':'');
+    document.getElementById('zipBtn').style.display = states.length ? 'inline-block' : 'none';
+    if (!states.length) { area.innerHTML = '<div class="empty">该批没有可生成的兑换码（无未使用码，或都已核销）</div>'; return; }
+    var html = '<div class="grid">' + states.map(function(s,i){
+      return '<div class="card">' +
+        (s.ok ? '<img src="'+s.qr+'" alt="小程序码"/>' : '<div class="err" style="padding:60px 10px;">'+esc(s.error||'生成失败')+'</div>') +
+        '<div class="code">'+esc(s.code)+'</div>' +
+        '<div class="sub">微信扫一扫 直达兑换</div>' +
+        '<div class="actions">' +
+          (s.ok ? '<a class="dl" download="'+esc(s.code)+'.png" href="'+s.qr+'">下载</a>' : '') +
+        '</div></div>';
+    }).join('') + '</div>';
+    area.innerHTML = html;
+  }
+
+  document.getElementById('genBtn').onclick = async function(){
+    var bn = batchSel.value;
+    if (!bn) { alert('请先选择批次'); return; }
+    this.disabled = true; this.textContent = '生成中…';
+    area.innerHTML = '<div class="loading">正在批量生成小程序码，请稍候…</div>';
+    try {
+      var d = await api('/admin/redeem-codes/batch-wxcode', { method:'POST', body:{ batchNo: bn } });
+      states = (d.list||[]).map(function(x){ return { code:x.code, qr:x.qr||'', ok:!!x.qr, error:x.error||'' }; });
+      renderCards();
+    } catch(e) {
+      area.innerHTML = '<div class="err" style="padding:30px;">生成失败：' + esc(e.message||'未知错误') + '</div>';
+    } finally {
+      this.disabled = false; this.textContent = '生成该批小程序码';
+    }
+  };
+
+  document.getElementById('zipBtn').onclick = function(){
+    var okList = states.filter(function(s){ return s.ok; });
+    if (!okList.length) { alert('没有可打包的小程序码'); return; }
+    var zip = new JSZip();
+    var folder = zip.folder('兑换码小程序码');
+    okList.forEach(function(s){
+      var b64 = s.qr.split(',')[1];
+      folder.file(s.code + '.png', b64, { base64: true });
+    });
+    zip.generateAsync({ type:'blob' }).then(function(blob){
+      var a = document.createElement('a');
+      var url = URL.createObjectURL(blob);
+      a.href = url;
+      a.download = '兑换码小程序码_' + batchSel.value + '.zip';
+      document.body.appendChild(a); a.click();
+      setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); }, 500);
+    });
+  };
+
+  loadBatches();
+  </script>
+</body>
+</html>

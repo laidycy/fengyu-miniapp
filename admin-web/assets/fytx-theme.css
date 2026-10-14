@@ -1,0 +1,191 @@
+/* ============================================================
+   丰鱼天下 · 管理后台 现代化主题 (V0.2.0)
+   品牌绿系：#1B5E20(深) #2E7D32(主) #4CAF50(亮) 背景 #F5F7F4
+   注入方式：追加到 dist/index.html <head> 末尾（不触碰 JS）
+   覆盖对象：antd v5 语义类
+   登录页走 iCloud 极简风（白底/居中logo+标题/窄表单）
+   登录样式全部限定在【登录容器】作用域，避免误伤后台内容卡
+   ============================================================ */
+
+/* ---------- 1. 全局基调 ---------- */
+:root{
+  --fytx-green:#2E7D32;
+  --fytx-green-dark:#1B5E20;
+  --fytx-green-deep:#14521a;
+  --fytx-green-light:#4CAF50;
+  --fytx-bg:#F5F7F4;
+  --fytx-shadow:0 4px 16px rgba(27,94,32,.08);
+}
+html,body{background:var(--fytx-bg);}
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft Yahei',sans-serif;}
+/* 按钮/链接 主色统一染绿 */
+.ant-btn-primary{
+  background:linear-gradient(135deg,var(--fytx-green) 0%,var(--fytx-green-dark) 100%) !important;
+  border-color:var(--fytx-green) !important;
+  box-shadow:0 4px 10px rgba(46,125,50,.25) !important;
+}
+.ant-btn-primary:not(:disabled):hover{background:linear-gradient(135deg,var(--fytx-green-light),var(--fytx-green)) !important;border-color:var(--fytx-green-light) !important;}
+.ant-btn-primary:not(:disabled):active{background:var(--fytx-green-deep) !important;}
+a{color:var(--fytx-green);} a:hover{color:var(--fytx-green-light);}
+
+/* ============================================================
+   2. 登录页 · iCloud 极简风
+   登录容器 = body 下【不含 aside/侧边栏】的全屏 flex 层，
+   该选择器只命中登录页，后台页面卡在 .ant-layout 内不受影响。
+   ============================================================ */
+.LOGIN {
+  border:0;
+}
+/* 背景纯白 */
+body > div > div:not(:has(.ant-layout-sider)){
+  background:#fff !important;
+  font-family:inherit;
+}
+/* 登录卡片：去卡片感(透明无边无影)，宽 400 居中单列 */
+body > div > div:not(:has(.ant-layout-sider)) > .ant-card,
+body > div > div:not(:has(.ant-layout-sider)) .ant-card.ant-card-bordered{
+  background:transparent !important;
+  border:none !important;
+  box-shadow:none !important;
+  border-radius:0 !important;
+  width:400px !important;
+  max-width:92vw !important;
+  text-align:center;
+}
+/* 靠 ::before 插入品牌 logo(圆角绿影) */
+body > div > div:not(:has(.ant-layout-sider)) .ant-card-head{
+  padding:26px 0 10px !important;
+  border:none !important;
+  background:transparent !important;
+}
+body > div > div:not(:has(.ant-layout-sider)) .ant-card-head::before{
+  content:"";display:block;width:84px;height:84px;margin:0 auto 24px;
+  background:url("/admin/logo.png") center/contain no-repeat;
+  border-radius:22px;box-shadow:0 12px 28px rgba(27,94,32,.20);
+}
+/* 大标题 + 副标题 */
+body > div > div:not(:has(.ant-layout-sider)) .ant-card-head-title{
+  color:#1d1d1f !important;font-size:25px !important;font-weight:600 !important;
+  letter-spacing:1px;line-height:1.3;padding:0 !important;
+}
+body > div > div:not(:has(.ant-layout-sider)) .ant-card-head-title::after{
+  content:"丰鱼天下 · 智慧垂钓管理平台";
+  display:block;font-size:13px;font-weight:400;color:#86868b;
+  margin-top:9px;letter-spacing:.4px;
+}
+/* 表单列左对齐留白 */
+body > div > div:not(:has(.ant-layout-sider)) .ant-card-body{
+  padding:20px 34px 40px !important;
+  text-align:left;
+}
+body > div > div:not(:has(.ant-layout-sider)) .ant-form-item{ margin-bottom:18px !important; }
+/* 输入框：高、细灰边、圆角、聚焦绿 */
+body > div > div:not(:has(.ant-layout-sider)) .ant-input,
+body > div > div:not(:has(.ant-layout-sider)) .ant-input-affix-wrapper{
+  border-radius:8px !important;
+  height:48px !important;
+  padding:4px 14px !important;
+  font-size:15px !important;
+  border:1px solid #d8d8dd !important;
+  background:#fff !important;
+  transition:border-color .25s,box-shadow .25s;
+}
+body > div > div:not(:has(.ant-layout-sider)) .ant-input-affix-wrapper:hover{ border-color:#b9b9c0 !important; }
+body > div > div:not(:has(.ant-layout-sider)) .ant-input-affix-wrapper-focused,
+body > div > div:not(:has(.ant-layout-sider)) .ant-input-affix-wrapper:focus-within{
+  border-color:#2E7D32 !important;
+  box-shadow:0 0 0 3.5px rgba(46,125,50,.14) !important;
+}
+/* 输入图标配色 */
+body > div > div:not(:has(.ant-layout-sider)) .ant-input-prefix .anticon,
+body > div > div:not(:has(.ant-layout-sider)) .ant-input-suffix .anticon{ color:#b0b0b6 !important; }
+/* 登录按钮：全宽 高 细圆角 品牌绿，iCloud 质感 */
+body > div > div:not(:has(.ant-layout-sider)) .ant-btn-primary{
+  width:100% !important;height:48px !important;border-radius:8px !important;
+  font-size:16px !important;font-weight:500 !important;letter-spacing:4px !important;
+  margin-top:2px !important;
+  background:linear-gradient(180deg,#3a9e40 0%,#2E7D32 100%) !important;
+  border:none !important;
+  box-shadow:0 7px 18px rgba(46,125,50,.30) !important;
+  transition:filter .2s,transform .06s ease;
+}
+body > div > div:not(:has(.ant-layout-sider)) .ant-btn-primary:hover{ filter:brightness(1.07) !important; }
+body > div > div:not(:has(.ant-layout-sider)) .ant-btn-primary:active{ transform:translateY(1px); }
+/* 若存在 label(如新旧表单)统一深灰 */
+body > div > div:not(:has(.ant-layout-sider)) .ant-form-item-label label{ color:#4a4a4f !important; font-weight:500 !important; }
+
+/* ============================================================
+   3. 后台整体布局：深绿侧边栏 + 白顶栏
+   ============================================================ */
+.ant-layout .ant-layout-sider{
+  background:linear-gradient(180deg,var(--fytx-green-dark) 0%,var(--fytx-green-deep) 100%) !important;
+  box-shadow:2px 0 14px rgba(20,82,26,.35) !important;
+}
+.ant-layout-sider > div:first-child{
+  border-bottom:1px solid rgba(255,255,255,.10) !important;
+  color:#fff !important;
+}
+.ant-layout-sider img{border-radius:6px !important;}
+.ant-layout-sider .ant-menu{
+  background:transparent !important;
+  border-inline-end:none !important;
+  padding:8px;
+}
+.ant-layout-sider .ant-menu-item{
+  color:rgba(255,255,255,.78) !important;
+  margin:4px 0 !important;
+  border-radius:10px !important;
+  height:44px !important;
+  line-height:44px !important;
+}
+.ant-layout-sider .ant-menu-item .anticon{ color:rgba(255,255,255,.85) !important; }
+.ant-layout-sider .ant-menu-item:hover{ color:#fff !important; background:rgba(255,255,255,.10) !important; }
+.ant-layout-sider .ant-menu-item-selected{
+  background:linear-gradient(90deg,rgba(76,175,80,.95),rgba(46,125,50,.95)) !important;
+  color:#fff !important;font-weight:600 !important;
+  box-shadow:0 4px 12px rgba(0,0,0,.25) !important;
+}
+.ant-layout-sider .ant-menu-item-selected .anticon{color:#fff !important;}
+.ant-layout-sider .ant-menu-item-selected::after,.ant-menu-inline .ant-menu-item::after{display:none !important;border:none !important;}
+.ant-layout-sider .ant-menu>.ant-menu-item{padding-inline:20px !important;}
+/* 顶栏 */
+.ant-layout .ant-layout-header{
+  background:#fff !important;
+  box-shadow:0 2px 12px rgba(27,94,32,.06) !important;
+  position:relative;z-index:5;border-bottom:1px solid #eef1ee !important;
+  color:#333 !important;
+}
+.ant-layout-header .ant-avatar{background:linear-gradient(135deg,var(--fytx-green),var(--fytx-green-dark)) !important;}
+/* 内容区 */
+.ant-layout .ant-layout-content{ background:var(--fytx-bg) !important; }
+
+/* ============================================================
+   4. 内容组件：卡片/表格现代感（仅后台布局内，已含 aside）
+   ============================================================ */
+.ant-layout .ant-card{
+  border-radius:14px !important;border:1px solid #ecf0ec !important;
+  box-shadow:var(--fytx-shadow) !important;
+}
+.ant-layout .ant-card-head-title{ color:var(--fytx-green-dark) !important; }
+/* 表格容器白卡 */
+.ant-layout-content .ant-table-wrapper .ant-table,
+.ant-layout-content > div > .ant-table{
+  background:#fff !important;border-radius:14px !important;
+  box-shadow:0 2px 12px rgba(27,94,32,.06) !important;overflow:hidden;
+}
+.ant-layout-content .ant-table-thead > tr > th{
+  background:#f0f6f1 !important;color:#1B5E20 !important;font-weight:600 !important;
+  border-bottom:1px solid #e4ece5 !important;
+}
+.ant-layout-content .ant-table-tbody > tr > td{ border-bottom:1px solid #f0f4f0 !important; }
+.ant-layout-content .ant-table-tbody > tr:hover > td{ background:#f6faf6 !important; }
+/* 分页/勾选/Tabs/DatePicker 绿 */
+.ant-pagination .ant-pagination-item-active{ border-color:var(--fytx-green) !important; }
+.ant-pagination .ant-pagination-item-active a{ color:var(--fytx-green) !important; }
+.ant-checkbox-checked .ant-checkbox-inner{ background-color:var(--fytx-green) !important;border-color:var(--fytx-green) !important; }
+.ant-radio-checked .ant-radio-inner{ border-color:var(--fytx-green) !important; }
+.ant-radio-checked .ant-radio-inner::after{ background-color:var(--fytx-green) !important; }
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{ color:var(--fytx-green) !important; }
+.ant-tabs .ant-tabs-ink-bar{ background:var(--fytx-green) !important; }
+.ant-picker-focused{ border-color:var(--fytx-green) !important; box-shadow:0 0 0 2px rgba(46,125,50,.15) !important; }
+.ant-modal-title{ color:var(--fytx-green-dark) !important; }
