@@ -1,0 +1,157 @@
+.redeem-code-page {
+  min-height: 100vh;
+  background: #f5f7f4;
+  padding: 40rpx 32rpx;
+  box-sizing: border-box;
+}
+
+.rc-hero {
+  padding: 24rpx 8rpx 32rpx;
+}
+
+.rc-hero-title {
+  display: block;
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #2e7d32;
+}
+
+.rc-hero-sub {
+  display: block;
+  margin-top: 10rpx;
+  font-size: 26rpx;
+  color: #999;
+}
+
+.rc-card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 32rpx 32rpx 40rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.rc-input-row {
+  display: flex;
+  align-items: center;
+}
+
+.rc-input {
+  flex: 1;
+  height: 84rpx;
+  background: #f5f7f4;
+  border-radius: 12rpx;
+  padding: 0 24rpx;
+  font-size: 30rpx;
+  letter-spacing: 1rpx;
+}
+
+.rc-input-ph {
+  color: #bbb;
+}
+
+.rc-query-btn {
+  margin-left: 16rpx;
+  background: #2e7d32;
+  color: #fff;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  padding: 0 36rpx;
+  line-height: 84rpx;
+  height: 84rpx;
+  margin: 0 0 0 16rpx;
+}
+
+.rc-query-btn::after {
+  border: none;
+}
+
+.rc-result {
+  margin-top: 32rpx;
+  border-top: 2rpx solid #f2f2f2;
+  padding-top: 28rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rc-result-empty {
+  font-size: 26rpx;
+  color: #999;
+  padding: 24rpx 0;
+}
+
+.rc-ok-badge {
+  font-size: 26rpx;
+  color: #2e7d32;
+  background: #e8f5e9;
+  padding: 4rpx 24rpx;
+  border-radius: 24rpx;
+  margin-bottom: 16rpx;
+}
+
+.rc-invalid-badge {
+  font-size: 26rpx;
+  color: #e53935;
+  background: #ffebee;
+  padding: 4rpx 24rpx;
+  border-radius: 24rpx;
+  margin-bottom: 16rpx;
+}
+
+.rc-code-display {
+  font-size: 40rpx;
+  font-weight: 700;
+  letter-spacing: 2rpx;
+  color: #333;
+  font-family: 'Menlo', 'Consolas', monospace;
+  padding: 8rpx 0 20rpx;
+  text-align: center;
+}
+
+.rc-code-display.dim {
+  color: #bbb;
+}
+
+.rc-benefit-list {
+  width: 100%;
+}
+
+.rc-benefit-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 18rpx 8rpx;
+  border-bottom: 2rpx solid #f7f7f7;
+}
+
+.rc-benefit-k {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.rc-benefit-v {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #e65100;
+}
+
+.rc-redeem-btn {
+  margin-top: 36rpx;
+  width: 100%;
+  background: #2e7d32;
+  color: #fff;
+  border-radius: 44rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+}
+
+.rc-redeem-btn::after {
+  border: none;
+}
+
+.rc-tip {
+  display: block;
+  margin-top: 28rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #bbb;
+}

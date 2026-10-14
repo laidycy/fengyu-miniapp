@@ -1,0 +1,131 @@
+// 对齐线上 V0.0.5 管理端
+.admin-members-page {
+  min-height: 100vh;
+  background: #F5F7F4;
+  padding: 20rpx 24rpx 60rpx;
+  box-sizing: border-box;
+}
+
+.card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.filter-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16rpx;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.filter-input {
+  flex: 1;
+  background: #F5F7F4;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  padding: 14rpx 16rpx;
+  margin-right: 12rpx;
+
+  &.small {
+    flex: 0 0 auto;
+    width: 200rpx;
+  }
+}
+
+.filter-picker {
+  background: #F5F7F4;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  padding: 14rpx 16rpx;
+  color: #333;
+  margin-right: 12rpx;
+}
+
+.date-sep {
+  font-size: 24rpx;
+  color: #999;
+  margin-right: 12rpx;
+}
+
+.filter-btn {
+  background: #2E7D32;
+  color: #fff;
+  font-size: 24rpx;
+  border-radius: 8rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  margin: 0;
+  padding: 0 24rpx;
+
+  &::after {
+    border: none;
+  }
+}
+
+.empty {
+  text-align: center;
+  color: #999;
+  font-size: 26rpx;
+  padding: 60rpx 0;
+}
+
+.member-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.member-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16rpx;
+}
+
+.member-no {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.level-badge {
+  font-size: 22rpx;
+  padding: 6rpx 18rpx;
+  border-radius: 999rpx;
+
+  &.lv-guest { background: #F5F5F5; color: #999; }
+  &.lv-silver { background: #ECEFF1; color: #607D8B; }
+  &.lv-gold { background: #FFF8E1; color: #F9A825; }
+  &.lv-diamond { background: #E0F7FA; color: #0097A7; }
+}
+
+.member-body {
+  display: flex;
+  flex-wrap: wrap;
+  border-top: 1rpx solid #f5f5f5;
+  padding-top: 8rpx;
+}
+
+.member-info {
+  width: 50%;
+  display: flex;
+  padding: 10rpx 0;
+  box-sizing: border-box;
+}
+
+.info-label {
+  font-size: 24rpx;
+  color: #999;
+  width: 110rpx;
+}
+
+.info-value {
+  font-size: 24rpx;
+  color: #333;
+}

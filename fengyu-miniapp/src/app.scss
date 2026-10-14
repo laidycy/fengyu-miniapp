@@ -1,0 +1,61 @@
+$primary: #2E7D32;
+$primary-light: #4CAF50;
+$primary-dark: #1B5E20;
+$bg: #F5F7F4;
+$text: #333;
+$text-secondary: #999;
+$text-light: #666;
+$danger: #E53935;
+$warning: #FB8C00;
+$success: #2E7D32;
+
+page {
+  background-color: $bg;
+  color: $text;
+  font-size: 28rpx;
+  line-height: 1.6;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+}
+
+.container {
+  padding: 24rpx;
+}
+
+.card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary {
+  background: $primary;
+  color: #fff;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+
+  &:active {
+    background: $primary-dark;
+  }
+}
+
+.btn-outline {
+  background: transparent;
+  color: $primary;
+  border: 2rpx solid $primary;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+}
+
+.btn-disabled {
+  background: #ccc !important;
+  color: #fff !important;
+}
+
+.text-primary { color: $primary; }
+.text-danger { color: $danger; }
+.text-warning { color: $warning; }
+.text-secondary { color: $text-secondary; }
+.text-light { color: $text-light; }

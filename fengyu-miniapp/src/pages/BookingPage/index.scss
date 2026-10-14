@@ -1,0 +1,1047 @@
+// 预约页样式 —— 对齐线上 V0.0.5
+// flex 纵向布局占满 windowHeight（内联 style 传入），底部操作栏贴底，内容区 flex:1 内部滚动，无空行
+.page.booking-page {
+  display: flex;
+  flex-direction: column;
+  background: #F5F7F4;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+// 步骤条
+.steps-bar {
+  background: #fff;
+  padding: 24rpx 32rpx;
+  flex-shrink: 0;
+}
+
+.steps-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex: 1;
+}
+
+.step-connector {
+  position: absolute;
+  top: 28rpx;
+  left: 50%;
+  width: 100%;
+  height: 4rpx;
+}
+
+.step-connector-done {
+  background: #2E7D32;
+}
+
+.step-connector-pending {
+  background: #E0E0E0;
+}
+
+.step-dot {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  z-index: 1;
+  margin-bottom: 16rpx;
+}
+
+.step-dot-done {
+  background: #2E7D32;
+  color: #fff;
+}
+
+.step-dot-active {
+  background: #2E7D32;
+  color: #fff;
+  box-shadow: 0 0 0 8rpx rgba(46,125,50,0.2);
+}
+
+.step-dot-pending {
+  background: #E0E0E0;
+  color: #999;
+}
+
+.step-label {
+  font-size: 20rpx;
+  color: #999;
+  text-align: center;
+}
+
+.step-label-active {
+  color: #2E7D32;
+  font-weight: 600;
+}
+
+// 步骤内容
+.step-content {
+  flex: 1;
+  min-height: 0;
+  padding: 32rpx;
+  box-sizing: border-box;
+}
+
+.step-card {
+  background: #fff;
+  border-radius: 32rpx;
+  padding: 40rpx;
+  margin-bottom: 32rpx;
+}
+
+.step-title {
+  display: flex;
+  align-items: center;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 40rpx;
+}
+
+.step-title-icon {
+  margin-right: 16rpx;
+}
+
+// 日期选择（对齐线上：一行7天正方形格子）
+.date-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12rpx;
+}
+
+.date-btn {
+  aspect-ratio: 1;
+  border-radius: 16rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  transition: all 0.3s;
+}
+
+.date-btn-available {
+  background-color: #F5F5F5;
+  color: #555;
+}
+
+.date-btn-selected {
+  background-color: #2E7D32;
+  color: #fff;
+}
+
+.date-btn-selected .date-btn-week,
+.date-btn-selected .date-btn-day {
+  color: #fff;
+}
+
+.date-btn-disabled {
+  background-color: #FAFAFA;
+  color: #ccc;
+}
+
+.date-btn-week {
+  font-size: 20rpx;
+  opacity: 0.7;
+}
+
+.date-btn-day {
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+.date-btn-full {
+  font-size: 18rpx;
+}
+
+.date-hint {
+  display: block;
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 24rpx;
+  text-align: center;
+}
+
+// 时段选择
+.slot-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.slot-btn {
+  border: 4rpx solid #E0E0E0;
+  border-radius: 28rpx;
+  padding: 28rpx;
+  background: #fff;
+}
+
+.slot-btn-selected {
+  border-color: #2E7D32;
+  background: #F1F8E9;
+}
+
+.slot-btn-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.slot-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.slot-time {
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 8rpx;
+}
+
+.slot-price {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #E53935;
+  text-align: right;
+}
+
+.slot-price-unit {
+  font-size: 22rpx;
+  color: #999;
+  text-align: right;
+}
+
+// 人数
+.people-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+}
+
+.people-label {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.people-controls {
+  display: flex;
+  align-items: center;
+  gap: 48rpx;
+}
+
+.people-btn {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  background: #F1F8E9;
+  color: #2E7D32;
+  font-size: 32rpx;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.people-btn-minus {
+  background: #F5F5F5;
+  color: #999;
+}
+
+.people-count {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #333;
+  min-width: 60rpx;
+  text-align: center;
+}
+
+// 费用预览
+.fee-preview {
+  background: #F8FAF8;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  margin-top: 40rpx;
+}
+
+.fee-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12rpx 0;
+  font-size: 24rpx;
+}
+
+.fee-label {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.fee-value {
+  font-size: 24rpx;
+  color: #333;
+}
+
+.fee-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 24rpx;
+  border-top: 2rpx solid #E0E0E0;
+  margin-top: 16rpx;
+}
+
+.fee-total-label {
+  font-size: 26rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.fee-total-value {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #E53935;
+}
+
+// 钓位
+.fishing-spot {
+  position: relative;
+  border-radius: 24rpx;
+  overflow: hidden;
+  height: 400rpx;
+  background: linear-gradient(180deg, #E8F5E9, #B2DFDB);
+}
+
+.spot-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.spot-icon {
+  font-size: 96rpx;
+}
+
+.spot-text {
+  font-size: 24rpx;
+  color: #555;
+  margin-top: 16rpx;
+  font-weight: 500;
+}
+
+.spot-hint {
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 12rpx;
+}
+
+.spot-water {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80rpx;
+  background: rgba(46,125,50,0.2);
+}
+
+.spot-tip {
+  background: #FFF8E1;
+  border-radius: 24rpx;
+  padding: 24rpx;
+  margin-top: 24rpx;
+}
+
+.spot-tip-text {
+  font-size: 24rpx;
+  color: #8D6E63;
+  line-height: 1.6;
+}
+
+// 安全须知
+.safety-title {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.safety-scroll {
+  max-height: 320rpx;
+  background: #FAFAFA;
+  border-radius: 20rpx;
+  padding: 24rpx;
+  margin-bottom: 24rpx;
+}
+
+.safety-line {
+  padding: 8rpx 0;
+}
+
+.safety-line-text {
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.7;
+}
+
+.safety-agree {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+}
+
+.safety-checkbox {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 12rpx;
+  border: 4rpx solid #ccc;
+  margin-right: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.safety-checkbox-checked {
+  background: #2E7D32;
+  border-color: #2E7D32;
+}
+
+.safety-checkbox-mark {
+  color: #fff;
+  font-size: 24rpx;
+}
+
+.safety-agree-text {
+  font-size: 24rpx;
+  color: #333;
+}
+
+// 手机号绑定
+.safety-phone-block {
+  margin-top: 24rpx;
+  border-top: 2rpx solid #F0F0F0;
+  padding-top: 32rpx;
+}
+
+.safety-phone-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12rpx;
+}
+
+.safety-phone-desc {
+  font-size: 22rpx;
+  color: #999;
+  line-height: 1.6;
+  margin-bottom: 24rpx;
+}
+
+.phone-bound-box {
+  display: flex;
+  align-items: center;
+  background: #F1F8E9;
+  border-radius: 24rpx;
+  padding: 28rpx;
+}
+
+.phone-bound-icon {
+  font-size: 36rpx;
+  margin-right: 20rpx;
+}
+
+.phone-bound-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.phone-bound-label {
+  font-size: 24rpx;
+  color: #888;
+}
+
+.phone-bound-value {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #2E7D32;
+  margin-top: 4rpx;
+}
+
+.phone-auth-btn {
+  background: #2E7D32;
+  color: #fff;
+  border-radius: 24rpx;
+  height: 96rpx;
+  line-height: 96rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30rpx;
+}
+
+.phone-auth-btn-disabled {
+  background: #ccc;
+}
+
+.phone-auth-btn-icon {
+  margin-right: 12rpx;
+  font-size: 32rpx;
+}
+
+.phone-auth-tip {
+  font-size: 22rpx;
+  color: #1976D2;
+  margin-top: 20rpx;
+  text-align: center;
+}
+
+// 订单确认
+.order-confirm-card {
+  background: #fff;
+  border-radius: 32rpx;
+  padding: 40rpx;
+  margin-bottom: 32rpx;
+}
+
+.confirm-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 32rpx;
+}
+
+.confirm-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 16rpx 0;
+  font-size: 24rpx;
+}
+
+.confirm-label {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.confirm-value {
+  font-size: 24rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+// 会员卡
+.member-card {
+  background: linear-gradient(135deg, #2E7D32, #43A047);
+  border-radius: 32rpx;
+  padding: 32rpx;
+  margin-bottom: 32rpx;
+}
+
+.member-row {
+  display: flex;
+  align-items: center;
+}
+
+.member-avatar {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  margin-right: 24rpx;
+}
+
+.member-info {
+  flex: 1;
+}
+
+.member-name {
+  color: #fff;
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+.member-no {
+  color: rgba(255,255,255,0.8);
+  font-size: 22rpx;
+  margin-top: 4rpx;
+}
+
+.member-level-badge {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  font-size: 22rpx;
+  padding: 8rpx 24rpx;
+  border-radius: 40rpx;
+}
+
+// 费用明细
+.fee-detail-title {
+  font-size: 26rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 24rpx;
+}
+
+.fee-detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12rpx 0;
+  font-size: 24rpx;
+}
+
+.fee-detail-label {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.fee-detail-value {
+  font-size: 24rpx;
+  color: #333;
+}
+
+.fee-discount {
+  color: #2E7D32;
+}
+
+.fee-deposit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 2rpx solid #F0F0F0;
+  margin-top: 24rpx;
+  padding-top: 24rpx;
+}
+
+.fee-deposit-label {
+  font-size: 26rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+.fee-deposit-value {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #E53935;
+}
+
+// 底部操作栏（正常文档流贴底，不再 fixed，避免内容上方空行）
+.bottom-bar {
+  background: #fff;
+  padding: 24rpx 32rpx calc(24rpx + env(safe-area-inset-bottom));
+  box-shadow: 0 -8rpx 32rpx rgba(0,0,0,0.08);
+  flex-shrink: 0;
+}
+
+.bottom-bar-inner {
+  display: flex;
+  gap: 24rpx;
+}
+
+.bottom-btn {
+  flex: 1;
+  height: 96rpx;
+  border-radius: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26rpx;
+}
+
+.bottom-btn-prev {
+  background: #F5F5F5;
+  color: #666;
+}
+
+.bottom-btn-green {
+  background: #2E7D32;
+  color: #fff;
+}
+
+.bottom-btn-next {
+  background: #2E7D32;
+  color: #fff;
+}
+
+.bottom-btn-pay {
+  background: linear-gradient(135deg, #E53935, #FF5722);
+  color: #fff;
+  font-weight: 600;
+}
+
+.bottom-btn-disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+// 未登录横幅（正常文档流贴底，不再 fixed）
+.login-banner-fixed {
+  background: linear-gradient(135deg, #2E7D32, #388E3C);
+  padding: 20rpx 32rpx calc(20rpx + env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+  flex-shrink: 0;
+}
+
+.login-banner-fixed-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0; /* 允许文本收缩 */
+}
+
+.login-banner-fixed-icon {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 6rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 18rpx;
+  flex-shrink: 0;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.15);
+}
+
+.login-banner-fixed-logo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.login-banner-fixed-texts {
+  min-width: 0;
+  flex: 1;
+}
+
+.login-banner-fixed-title {
+  color: #fff;
+  font-size: 30rpx;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.login-banner-fixed-desc {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 24rpx;
+  margin-top: 4rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.login-banner-fixed-btn {
+  background: #fff;
+  border-radius: 40rpx;
+  padding: 16rpx 40rpx;
+  flex-shrink: 0; /* 保证按钮单行不换行 */
+  white-space: nowrap;
+}
+
+.login-banner-fixed-btn-text {
+  color: #2E7D32;
+  font-size: 28rpx;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+// 成功页
+.success-page {
+  min-height: 100vh;
+  background: #F5F7F4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.success-content {
+  width: 100%;
+  padding: 64rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.success-icon-wrap {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  background: #2E7D32;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32rpx;
+}
+
+.success-icon {
+  color: #fff;
+  font-size: 64rpx;
+}
+
+.success-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #333;
+}
+
+.success-subtitle {
+  font-size: 26rpx;
+  color: #999;
+  margin-top: 12rpx;
+}
+
+.booking-code-card {
+  width: 100%;
+  background: #fff;
+  border-radius: 32rpx;
+  padding: 48rpx;
+  margin-top: 48rpx;
+  display: flex;
+  justify-content: center;
+}
+
+.code-card-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.qr-code-image {
+  width: 400rpx;
+  height: 400rpx;
+}
+
+.code-number {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #333;
+  letter-spacing: 4rpx;
+  margin-top: 24rpx;
+}
+
+.code-tip {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 12rpx;
+}
+
+.success-actions {
+  display: flex;
+  gap: 24rpx;
+  margin-top: 48rpx;
+  width: 100%;
+}
+
+.success-btn {
+  flex: 1;
+  height: 96rpx;
+  border-radius: 48rpx;
+  font-size: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.success-btn-outline {
+  background: #fff;
+  color: #2E7D32;
+  border: 4rpx solid #2E7D32;
+}
+
+.success-btn-primary {
+  background: #2E7D32;
+  color: #fff;
+}
+
+// ========== 渔具租赁 ==========
+.gear-desc {
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 24rpx;
+}
+
+.gear-need-row {
+  display: flex;
+  gap: 20rpx;
+}
+
+.gear-need-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28rpx 12rpx;
+  border-radius: 20rpx;
+  background: #F5F7F5;
+  border: 3rpx solid transparent;
+
+  &.gear-need-btn-on {
+    background: #E8F5E9;
+    border-color: #2E7D32;
+  }
+}
+
+.gear-need-emoji {
+  font-size: 44rpx;
+}
+
+.gear-need-label {
+  font-size: 24rpx;
+  color: #555;
+  margin-top: 12rpx;
+  font-weight: 600;
+}
+
+.gear-need-btn-on .gear-need-label {
+  color: #2E7D32;
+}
+
+.gear-form {
+  margin-top: 28rpx;
+  border-top: 2rpx dashed #E0E0E0;
+  padding-top: 24rpx;
+}
+
+.gear-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16rpx 0;
+}
+
+.gear-item-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.gear-item-name {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 600;
+}
+
+.gear-item-hint {
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 6rpx;
+}
+
+.gear-stepper {
+  display: flex;
+  align-items: center;
+}
+
+.gear-step-btn {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  background: #2E7D32;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  line-height: 1;
+
+  &.gear-step-btn-off {
+    background: #E0E0E0;
+    color: #aaa;
+  }
+}
+
+.gear-step-num {
+  min-width: 72rpx;
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #333;
+}
+
+.gear-sub-title {
+  display: block;
+  font-size: 26rpx;
+  color: #333;
+  font-weight: 600;
+  margin: 24rpx 0 16rpx;
+}
+
+.gear-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.gear-chip {
+  padding: 14rpx 26rpx;
+  border-radius: 999rpx;
+  background: #F5F7F5;
+  border: 2rpx solid #E0E0E0;
+  font-size: 24rpx;
+  color: #555;
+
+  &.gear-chip-on {
+    background: #E8F5E9;
+    border-color: #2E7D32;
+    color: #2E7D32;
+    font-weight: 600;
+  }
+}
+
+.gear-note {
+  margin-top: 28rpx;
+}
+
+.gear-note-label {
+  display: block;
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 12rpx;
+}
+
+.gear-note-input {
+  width: 100%;
+  height: 76rpx;
+  background: #F5F7F5;
+  border-radius: 16rpx;
+  padding: 0 24rpx;
+  font-size: 26rpx;
+  color: #333;
+  box-sizing: border-box;
+}
+
+.gear-summary {
+  margin-top: 28rpx;
+  background: #FFF8E1;
+  border-radius: 20rpx;
+  padding: 22rpx 24rpx;
+}
+
+.gear-summary-text {
+  font-size: 24rpx;
+  color: #8D6E63;
+  line-height: 1.6;
+}

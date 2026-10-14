@@ -1,0 +1,111 @@
+.profile-editor {
+  padding: 24rpx 32rpx;
+}
+
+/* 头像区 */
+.pe-avatar-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24rpx 0 32rpx;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.pe-avatar-wrap {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #f0f0f0;
+  margin-bottom: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pe-avatar {
+  width: 100%;
+  height: 100%;
+}
+
+.pe-avatar-empty {
+  font-size: 72rpx;
+  color: #bbb;
+}
+
+.pe-avatar-btn {
+  font-size: 26rpx;
+  color: #2e7d32;
+  background: #e8f5e9;
+  border-radius: 32rpx;
+  padding: 8rpx 40rpx;
+  line-height: 2;
+  margin: 0;
+}
+
+.pe-avatar-btn::after {
+  border: none;
+}
+
+.pe-avatar-tip {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 昵称区 */
+.pe-nick-row {
+  padding: 28rpx 0 8rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.pe-nick-label {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 16rpx;
+}
+
+.pe-nick-input {
+  height: 88rpx;
+  background: #f5f7f4;
+  border-radius: 12rpx;
+  padding: 0 24rpx;
+  font-size: 30rpx;
+}
+
+.pe-nick-ph {
+  color: #bbb;
+}
+
+.pe-nick-hint {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  color: #2e7d32;
+}
+
+/* 说明 */
+.pe-info {
+  padding: 20rpx 0;
+}
+
+.pe-info-text {
+  font-size: 24rpx;
+  color: #999;
+  line-height: 1.6;
+}
+
+/* 保存按钮 */
+.pe-save-btn {
+  margin-top: 40rpx;
+  background: #2e7d32;
+  color: #fff;
+  border-radius: 44rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+}
+
+.pe-save-btn::after {
+  border: none;
+}

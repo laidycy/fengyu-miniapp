@@ -1,0 +1,144 @@
+// 对齐线上 V0.0.5
+.points-page {
+  min-height: 100vh;
+  background: #F5F7F4;
+  padding: 20rpx 24rpx 60rpx;
+}
+
+/* 头部 */
+.points-header {
+  background: linear-gradient(180deg, #2E7D32, #4CAF50);
+  border-radius: 16rpx;
+  padding: 40rpx 32rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.points-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.points-label {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 12rpx;
+}
+
+.points-num {
+  font-size: 72rpx;
+  font-weight: 700;
+  color: #fff;
+}
+
+.points-sub {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* 锁定积分小字提示（未生效） */
+.points-locked-tip {
+  display: block;
+  font-size: 18rpx;
+  color: rgba(255, 255, 255, 0.75);
+  margin-top: 2rpx;
+  line-height: 1;
+}
+
+/* 明细 */
+.section {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+  display: block;
+  padding-bottom: 16rpx;
+  border-bottom: 1rpx solid #f5f5f5;
+  margin-bottom: 8rpx;
+}
+
+.empty {
+  padding: 60rpx 0;
+  text-align: center;
+}
+
+.empty-text {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.log-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #f8f8f8;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.log-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.log-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 6rpx;
+}
+
+.log-date {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.log-points {
+  font-size: 32rpx;
+  font-weight: 700;
+
+  &.earn {
+    color: #2E7D32;
+  }
+
+  &.consume {
+    color: #E53935;
+  }
+}
+
+/* 规则 */
+.rule-item {
+  display: flex;
+  margin-bottom: 12rpx;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.rule-dot {
+  font-size: 26rpx;
+  color: #2E7D32;
+  margin-right: 12rpx;
+}
+
+.rule-text {
+  flex: 1;
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.5;
+}

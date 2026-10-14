@@ -1,0 +1,236 @@
+/* 手机号快捷登录弹窗 —— 品牌绿，去除微信元素 */
+.login-mask {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ========== 登录成功欢迎卡片（2秒自动关闭） ========== */
+.welcome-mask {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: welcomeFadeIn 0.25s ease-out;
+}
+
+.welcome-card {
+  width: 560rpx;
+  background: #fff;
+  border-radius: 28rpx;
+  padding: 56rpx 48rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 16rpx 48rpx rgba(0, 0, 0, 0.18);
+}
+
+.welcome-check {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: #2E7D32;
+  color: #fff;
+  font-size: 48rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20rpx;
+  box-shadow: 0 6rpx 16rpx rgba(46, 125, 50, 0.35);
+}
+
+.welcome-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #2E7D32;
+  margin-bottom: 24rpx;
+}
+
+.welcome-line1 {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.welcome-line2 {
+  font-size: 28rpx;
+  color: #E65100;
+  font-weight: 600;
+  margin-top: 16rpx;
+  text-align: center;
+}
+
+.welcome-auto-close {
+  font-size: 22rpx;
+  color: #aaa;
+  margin-top: 36rpx;
+}
+
+.welcome-close {
+  position: absolute;
+  top: 16rpx;
+  right: 24rpx;
+  font-size: 40rpx;
+  color: #bbb;
+  padding: 8rpx;
+  line-height: 1;
+}
+
+@keyframes welcomeFadeIn {
+  from { opacity: 0; transform: translateY(20rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+.login-modal {
+  width: 600rpx;
+  background: #fff;
+  border-radius: 28rpx;
+  padding: 48rpx 40rpx 40rpx;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-close {
+  position: absolute;
+  top: 20rpx;
+  right: 28rpx;
+  font-size: 44rpx;
+  color: #bbb;
+  padding: 8rpx;
+  line-height: 1;
+}
+
+.login-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 28rpx;
+}
+
+.login-logo {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 24rpx;
+  background: #fff;
+  margin-bottom: 16rpx;
+  box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+.login-name {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #333;
+}
+
+.login-sub {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 8rpx;
+}
+
+.login-body {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-desc {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+  text-align: center;
+  margin-bottom: 36rpx;
+}
+
+.login-btn {
+  width: 100%;
+  background: #2E7D32;
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: 600;
+  border-radius: 48rpx;
+  height: 92rpx;
+  line-height: 92rpx;
+
+  &:active {
+    background: #1B5E20;
+  }
+
+  &[disabled] {
+    background: #ccc;
+    color: #fff;
+  }
+
+  &::after {
+    border: none;
+  }
+}
+
+/* 协议同意区：默认不勾选 */
+.login-agree {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rpx;
+  margin-top: 28rpx;
+  padding: 0 8rpx;
+  flex-wrap: wrap;
+}
+
+.agree-checkbox {
+  width: 32rpx;
+  height: 32rpx;
+  border: 2rpx solid #ccc;
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  flex-shrink: 0;
+  margin-top: 2rpx;
+
+  &.checked {
+    background: #2E7D32;
+    border-color: #2E7D32;
+  }
+}
+
+.agree-check {
+  color: #fff;
+  font-size: 20rpx;
+}
+
+.agree-text {
+  font-size: 24rpx;
+  color: #999;
+  line-height: 1.5;
+}
+
+.agree-link {
+  font-size: 24rpx;
+  color: #2E7D32;
+  text-decoration: underline;
+  padding: 0 2rpx;
+}
+
+.login-skip {
+  font-size: 26rpx;
+  color: #999;
+  margin-top: 32rpx;
+  padding: 8rpx 20rpx;
+}

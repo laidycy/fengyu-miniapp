@@ -1,0 +1,191 @@
+// 对齐线上 V0.0.5 管理端
+.admin-catch-page {
+  min-height: 100vh;
+  background: #F5F7F4;
+  padding: 20rpx 24rpx 60rpx;
+  box-sizing: border-box;
+}
+
+.card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.card-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+}
+
+.form-label {
+  font-size: 26rpx;
+  color: #333;
+  width: 150rpx;
+  flex-shrink: 0;
+}
+
+.form-input {
+  flex: 1;
+  font-size: 28rpx;
+}
+
+.picker-value {
+  font-size: 28rpx;
+  color: #2E7D32;
+  padding: 8rpx 16rpx;
+  background: #F5F7F4;
+  border-radius: 8rpx;
+}
+
+.quota-row {
+  justify-content: space-between;
+}
+
+.quota-toggle {
+  padding: 8rpx 24rpx;
+  border-radius: 999rpx;
+  background: #F5F7F4;
+  border: 1rpx solid #ddd;
+
+  &.on {
+    background: #2E7D32;
+    border-color: #2E7D32;
+  }
+}
+
+.quota-text {
+  font-size: 24rpx;
+  color: #666;
+
+  .quota-toggle.on & {
+    color: #fff;
+  }
+}
+
+.submit-btn {
+  margin-top: 24rpx;
+  background: #2E7D32;
+  color: #fff;
+  font-size: 30rpx;
+  font-weight: 600;
+  border-radius: 12rpx;
+  height: 84rpx;
+  line-height: 84rpx;
+
+  &::after {
+    border: none;
+  }
+}
+
+/* 查询 */
+.filter-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.filter-input {
+  flex: 1;
+  background: #F5F7F4;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  padding: 14rpx 16rpx;
+  margin-right: 12rpx;
+}
+
+.filter-picker {
+  background: #F5F7F4;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  padding: 14rpx 16rpx;
+  color: #333;
+  margin-right: 12rpx;
+}
+
+.filter-btn {
+  background: #2E7D32;
+  color: #fff;
+  font-size: 24rpx;
+  border-radius: 8rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  margin: 0;
+  padding: 0 24rpx;
+
+  &::after {
+    border: none;
+  }
+}
+
+.empty {
+  text-align: center;
+  color: #999;
+  font-size: 26rpx;
+  padding: 48rpx 0;
+}
+
+/* 表格 */
+.table {
+  width: 100%;
+}
+
+.table-head,
+.table-row {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #f2f2f2;
+}
+
+.table-head {
+  background: #F5F7F4;
+  border-radius: 8rpx;
+}
+
+.table-head .col {
+  font-weight: 600;
+  color: #333;
+  font-size: 24rpx;
+}
+
+.table-row .col {
+  font-size: 24rpx;
+  color: #555;
+}
+
+.col {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.col.member { flex: 1.6; }
+.col.fish { flex: 1; }
+.col.weight { flex: 0.9; }
+.col.datec { flex: 1.4; }
+.col.quota {
+  flex: 0.7;
+  text-align: center;
+}
+
+.col.quota.on {
+  color: #2E7D32;
+  font-weight: 700;
+}

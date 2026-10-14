@@ -1,0 +1,688 @@
+// 会员页样式 —— 对齐线上 V0.0.5（紧凑布局，一屏显示完）
+.page.member-page {
+  min-height: 100vh;
+  background: #F5F7F4;
+  padding: 24rpx 24rpx 40rpx;
+  box-sizing: border-box;
+}
+
+// 会员卡
+.member-card-main {
+  border-radius: 28rpx;
+  padding: 28rpx;
+  box-shadow: 0 16rpx 48rpx rgba(0,0,0,0.15);
+  overflow: hidden;
+}
+
+.member-card-inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.member-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32rpx;
+}
+
+.member-card-badge {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.25);
+  border-radius: 40rpx;
+  padding: 10rpx 28rpx;
+}
+
+.member-card-badge-icon {
+  font-size: 28rpx;
+  margin-right: 12rpx;
+}
+
+.member-card-badge-text {
+  color: #fff;
+  font-size: 26rpx;
+  font-weight: 600;
+}
+
+.member-card-no {
+  color: rgba(255,255,255,0.85);
+  font-size: 24rpx;
+}
+
+.member-card-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32rpx;
+}
+
+.member-card-avatar {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 24rpx;
+  overflow: hidden;
+}
+
+.member-card-avatar-img {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+}
+
+.member-card-avatar-default {
+  font-size: 44rpx;
+}
+
+.member-card-name {
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+.member-card-sub {
+  color: rgba(255,255,255,0.85);
+  font-size: 24rpx;
+  margin-top: 8rpx;
+  line-height: 1.4;
+}
+
+.member-card-stats {
+  display: flex;
+  background: rgba(255,255,255,0.18);
+  border-radius: 24rpx;
+  padding: 24rpx 0;
+}
+
+.card-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-stat-value {
+  color: #fff;
+  font-size: 38rpx;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.card-stat-label {
+  color: rgba(255,255,255,0.85);
+  font-size: 24rpx;
+  margin-top: 10rpx;
+  line-height: 1.4;
+}
+
+// 兑换码兑换（内联在顶部小条）
+.redeem-card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 18rpx 24rpx;
+  margin-top: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.redeem-card-left {
+  display: flex;
+  align-items: center;
+}
+
+.redeem-card-icon {
+  font-size: 40rpx;
+  margin-right: 20rpx;
+}
+
+.redeem-card-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.redeem-card-desc {
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 2rpx;
+}
+
+.redeem-card-arrow {
+  color: #ccc;
+  font-size: 36rpx;
+}
+
+// 邀请朋友
+.invite-card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 24rpx;
+  margin-top: 20rpx;
+}
+
+.invite-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.invite-title {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.invite-count {
+  display: flex;
+  align-items: baseline;
+}
+
+.invite-count-num {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #2E7D32;
+}
+
+.invite-count-label {
+  font-size: 22rpx;
+  color: #999;
+  margin-left: 6rpx;
+}
+
+.invite-desc {
+  font-size: 22rpx;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 16rpx;
+}
+
+.invite-code-row {
+  display: flex;
+  align-items: center;
+}
+
+.invite-code-box {
+  flex: 1;
+  background: #F5F8F4;
+  border: 2rpx dashed #2E7D32;
+  border-radius: 16rpx;
+  padding: 14rpx 24rpx;
+  margin-right: 16rpx;
+}
+
+.invite-code {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #2E7D32;
+  letter-spacing: 4rpx;
+}
+
+.invite-copy-btn {
+  background: #F1F8E9;
+  color: #2E7D32;
+  font-size: 24rpx;
+  padding: 10rpx 24rpx;
+  border-radius: 40rpx;
+  margin-right: 16rpx;
+}
+
+.invite-share-btn {
+  background: #2E7D32;
+  color: #fff;
+  font-size: 24rpx;
+  border-radius: 40rpx;
+  line-height: 56rpx;
+  height: 56rpx;
+  padding: 0 24rpx;
+  margin: 0;
+}
+
+.invite-bind-link {
+  font-size: 24rpx;
+  color: #1976D2;
+  margin-top: 14rpx;
+}
+
+.invite-progress {
+  margin-top: 16rpx;
+}
+
+.invite-progress-bg {
+  height: 12rpx;
+  background: #E8F5E9;
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+
+.invite-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #2E7D32, #66BB6A);
+  border-radius: 8rpx;
+  transition: width 0.3s;
+}
+
+.invite-progress-text {
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 10rpx;
+  display: block;
+}
+
+// 会员权益
+.benefit-card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 24rpx;
+  margin-top: 20rpx;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16rpx;
+}
+
+.benefit-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.benefit-cell {
+  width: 50%;
+  padding: 8rpx 0;
+  display: flex;
+  align-items: center;
+}
+
+.benefit-cell-star {
+  margin-right: 10rpx;
+  font-size: 22rpx;
+}
+
+.benefit-cell-text {
+  font-size: 24rpx;
+  color: #555;
+}
+
+// 操作行
+.action-row {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 20rpx;
+}
+
+.upgrade-btn-up {
+  flex: 1;
+  background: linear-gradient(135deg, #F9A825, #FFB300);
+  color: #fff;
+  border-radius: 40rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.invite-btn-up {
+  flex: 1;
+  background: #2E7D32;
+  color: #fff;
+  border-radius: 40rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 28rpx;
+  margin: 0;
+}
+
+// 未登录引导
+.guest-login-card {
+  background: #fff;
+  border-radius: 32rpx;
+  padding: 48rpx;
+  margin-top: 32rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.guest-login-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.guest-login-desc {
+  font-size: 26rpx;
+  color: #999;
+  margin-top: 12rpx;
+}
+
+.guest-login-btn {
+  margin-top: 32rpx;
+  background: #2E7D32;
+  color: #fff;
+  border-radius: 48rpx;
+  padding: 20rpx 80rpx;
+  font-size: 28rpx;
+}
+
+// 弹窗
+.dialog-overlay, .modal-mask {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dialog-panel {
+  width: 86%;
+  background: #fff;
+  border-radius: 40rpx;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40rpx 40rpx 0;
+}
+
+.dialog-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #333;
+}
+
+.dialog-close-icon {
+  font-size: 40rpx;
+  color: #999;
+}
+
+.dialog-body {
+  padding: 24rpx 32rpx 8rpx;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* 三列横向对比卡：一屏看完三种会员 */
+.upgrade-compare {
+  display: flex;
+  gap: 16rpx;
+  padding-bottom: 16rpx;
+}
+
+.upgrade-card {
+  flex: 1;
+  border: 4rpx solid #E0E0E0;
+  border-radius: 20rpx;
+  padding: 20rpx 12rpx 24rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 0;
+}
+
+.upgrade-card-selected {
+  border-color: #2E7D32;
+  background: #F1F8E9;
+}
+
+.upgrade-card-badge {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 18rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12rpx;
+}
+
+.upgrade-card-badge-icon {
+  font-size: 30rpx;
+}
+
+.upgrade-card-badge-silver { background: linear-gradient(135deg, #B0BEC5, #CFD8DC); }
+.upgrade-card-badge-gold { background: linear-gradient(135deg, #F9A825, #FFD54F); }
+.upgrade-card-badge-diamond { background: linear-gradient(135deg, #1565C0, #42A5F5); }
+
+.upgrade-card-name {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 6rpx;
+}
+
+.upgrade-card-price {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.upgrade-card-price-num {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #E53935;
+}
+
+.upgrade-card-price-unit {
+  font-size: 20rpx;
+  color: #999;
+  margin-left: 4rpx;
+}
+
+.upgrade-card-points {
+  font-size: 20rpx;
+  color: #2E7D32;
+  font-weight: 500;
+  margin: 8rpx 0 12rpx;
+}
+
+.upgrade-card-benefits {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.upgrade-card-benefit {
+  font-size: 20rpx;
+  color: #666;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.dialog-footer {
+  padding: 32rpx 40rpx;
+  border-top: 2rpx solid #f0f0f0;
+}
+
+.upgrade-confirm-btn {
+  background: linear-gradient(135deg, #F9A825, #FFB300);
+  color: #fff;
+  border-radius: 48rpx;
+  height: 96rpx;
+  line-height: 96rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  width: 100%;
+}
+
+// 绑定邀请码弹窗
+.modal-content {
+  width: 80%;
+  background: #fff;
+  border-radius: 40rpx;
+  padding: 48rpx;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+}
+
+.modal-desc {
+  font-size: 26rpx;
+  color: #999;
+  text-align: center;
+  margin-top: 16rpx;
+}
+
+.invite-input {
+  background: #F5F5F5;
+  border-radius: 24rpx;
+  padding: 24rpx 32rpx;
+  margin-top: 32rpx;
+  font-size: 32rpx;
+  text-align: center;
+}
+
+.modal-btn {
+  background: #2E7D32;
+  color: #fff;
+  border-radius: 48rpx;
+  height: 96rpx;
+  line-height: 96rpx;
+  font-size: 30rpx;
+  margin-top: 32rpx;
+}
+
+// ========== 兑换码兑换弹窗 ==========
+.redeem-modal {
+  width: 78%;
+  background: #fff;
+  border-radius: 40rpx;
+  overflow: hidden;
+  box-shadow: 0 16rpx 60rpx rgba(0, 0, 0, 0.18);
+}
+
+// 顶部品牌区（绿色渐变）
+.redeem-modal-head {
+  background: linear-gradient(135deg, #2E7D32, #43A047);
+  padding: 56rpx 40rpx 44rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.redeem-modal-close {
+  position: absolute;
+  top: 24rpx;
+  right: 28rpx;
+  width: 52rpx;
+  height: 52rpx;
+  line-height: 52rpx;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 32rpx;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+}
+
+.redeem-modal-icon {
+  font-size: 64rpx;
+  line-height: 1;
+  margin-bottom: 16rpx;
+}
+
+.redeem-modal-title {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #fff;
+}
+
+.redeem-modal-sub {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 12rpx;
+  text-align: center;
+}
+
+// 输入区
+.redeem-modal-body {
+  padding: 44rpx 40rpx 48rpx;
+}
+
+.redeem-input-wrap {
+  display: flex;
+  align-items: center;
+  background: #F5F7F5;
+  border-radius: 28rpx;
+  padding: 8rpx 8rpx 8rpx 32rpx;
+  border: 2rpx solid #E0E6E0;
+}
+
+.redeem-input {
+  flex: 1;
+  font-size: 32rpx;
+  letter-spacing: 2rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+}
+
+.redeem-input-ph {
+  color: #B0B5B0;
+  letter-spacing: 0;
+}
+
+.redeem-scan-btn {
+  display: flex;
+  align-items: center;
+  background: #2E7D32;
+  border-radius: 22rpx;
+  padding: 14rpx 24rpx;
+}
+
+.redeem-scan-icon {
+  font-size: 30rpx;
+  margin-right: 8rpx;
+}
+
+.redeem-scan-text {
+  font-size: 28rpx;
+  color: #fff;
+  font-weight: 600;
+}
+
+.redeem-submit-btn {
+  background: #2E7D32;
+  color: #fff;
+  border-radius: 48rpx;
+  height: 96rpx;
+  line-height: 96rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  margin-top: 36rpx;
+}
+
+.redeem-modal-tip {
+  display: block;
+  text-align: center;
+  font-size: 22rpx;
+  color: #A0A5A0;
+  margin-top: 24rpx;
+}

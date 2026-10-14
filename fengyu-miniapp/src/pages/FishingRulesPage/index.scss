@@ -1,0 +1,183 @@
+// 丰鱼天下钓鱼制度
+.fr-page {
+  min-height: 100vh;
+  background: #F5F7F4;
+  padding: 24rpx 24rpx 80rpx;
+}
+
+/* 顶部横幅 */
+.fr-banner {
+  background: linear-gradient(180deg, #1B5E20, #2E7D32);
+  border-radius: 20rpx;
+  padding: 40rpx 32rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.fr-banner-icon {
+  font-size: 72rpx;
+  margin-bottom: 12rpx;
+}
+
+.fr-banner-title {
+  font-size: 38rpx;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8rpx;
+}
+
+.fr-banner-sub {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* 区块 */
+.fr-section {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 24rpx;
+}
+
+.fr-section-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 2rpx solid #E8F5E9;
+}
+
+.fr-section-icon {
+  font-size: 32rpx;
+  margin-right: 12rpx;
+}
+
+.fr-section-text {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #2E7D32;
+}
+
+.fr-section-body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 条款 */
+.fr-line {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 14rpx;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.fr-line-num {
+  font-size: 26rpx;
+  color: #2E7D32;
+  font-weight: 600;
+  margin-right: 8rpx;
+  flex-shrink: 0;
+  line-height: 1.7;
+}
+
+.fr-line-text {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.7;
+}
+
+.fr-strong {
+  font-weight: 700;
+  color: #1B5E20;
+}
+
+.fr-highlight {
+  color: #E65100;
+  font-weight: 600;
+}
+
+/* 一览表 */
+.fr-table {
+  border: 1rpx solid #e8e8e8;
+  border-radius: 12rpx;
+  overflow: hidden;
+  margin-bottom: 16rpx;
+}
+
+.fr-table-row {
+  display: flex;
+  border-bottom: 1rpx solid #f0f0f0;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &.fr-table-head {
+    background: #E8F5E9;
+  }
+}
+
+.fr-th,
+.fr-td {
+  flex: 1;
+  padding: 16rpx 8rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #333;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fr-th {
+  font-weight: 700;
+  color: #2E7D32;
+}
+
+.fr-note {
+  font-size: 24rpx;
+  color: #999;
+  line-height: 1.6;
+}
+
+/* 底部 */
+.fr-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8rpx 0 24rpx;
+}
+
+.fr-footer-text {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.fr-footer-date {
+  font-size: 22rpx;
+  color: #bbb;
+  margin-top: 4rpx;
+}
+
+.fr-back {
+  margin-top: 8rpx;
+  background: #fff;
+  color: #666;
+  font-size: 28rpx;
+  border-radius: 48rpx;
+  border: 1rpx solid #e0e0e0;
+  text-align: center;
+  padding: 20rpx 0;
+}
+
+.fr-back-text {
+  font-size: 28rpx;
+  color: #666;
+}
