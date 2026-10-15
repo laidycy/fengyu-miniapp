@@ -1,6 +1,6 @@
 # 丰鱼天下 · 水库垂钓预约平台
 
-一套完整的水库/钓场预约业务系统，C 端微信小程序 + 安卓管理 App + Web 管理后台。
+一套完整的水库/钓场预约业务系统，C 端微信小程序 + 安卓/iOS 管理 App + Web 管理后台。
 
 > ⚠️ **本仓库已脱敏开源**：后端域名、微信 AppID、客服电话、管理端二维码均已替换为占位符或打码。
 > 部署前需替换的位置见各子项目的 README。
@@ -17,7 +17,7 @@
 
 ```
 ├── miniapp/      微信小程序 · C 端预约（Taro 4 + React 18 + TypeScript）
-├── field-app/    安卓管理 App（Flutter / Dart）· 场地方现场管理
+├── field-app/    安卓 + iOS 管理 App（Flutter / Dart，跨端同源）· 场地方现场管理
 └── admin-web/    Web 管理后台（Vite + React 构建产物）
 ```
 
@@ -29,7 +29,7 @@
 |---|---|
 | ![](docs/screenshots/miniapp_booking.jpg) | ![](docs/screenshots/miniapp_profile.png) |
 
-### 安卓管理 App（场地方）
+### 管理 App（场地方，安卓 / iOS 同源）
 
 | 登录 | 渔获录入 | 蓝牙秤读数 |
 |---|---|---|
@@ -62,16 +62,19 @@ npm run dev:weapp     # 微信开发者工具导入本目录
 
 部署前替换 `src/utils/config.ts` 的 `YOUR-API-DOMAIN`、`wx0000000000000000`，详见 `miniapp/README.md`。
 
-### 2. 安卓管理 App（field-app/）
+### 2. 管理 App（field-app/，安卓 + iOS）
 
 ```bash
 cd field-app
 flutter pub get
-flutter run
+flutter run                 # 自动选当前连接的设备（安卓/iOS 均可）
 ```
 
-部署前替换 `lib/config.dart` 的 `YOUR-API-DOMAIN`（后端 API 地址），并自行配置 Android 签名
-（`android/app/build.gradle.kts` 的 signingConfigs 已注释，构建前需填入你自己的 keystore）。
+- **安卓**：`flutter build apk`；部署前替换 `lib/config.dart` 的 `YOUR-API-DOMAIN`（后端 API 地址），
+  并自行配置 Android 签名（`android/app/build.gradle.kts` 的 signingConfigs 已注释，构建前需填入你自己的 keystore）。
+- **iOS**：`flutter build ios`（或 `ios/Runner.xcworkspace` 用 Xcode 打开后 Archive）；
+  `ios/Runner/Info.plist` 已配好蓝牙（电子秤）与相册权限；需 Apple 开发者账号签名
+  （免费个人账号可自签，7 天有效）。Bundle ID `com.fytx.fytxFieldApp` 可按需修改。
 
 ### 3. Web 管理后台（admin-web/）
 
