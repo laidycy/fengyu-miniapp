@@ -1127,6 +1127,7 @@ class _ScaleSheetState extends State<ScaleSheet> {
               separatorBuilder: (_, __) => const Divider(height: 1),
               itemBuilder: (_, i) {
                 final sr = _svc.scanResults[i];
+                final likely = _svc.isLikelyScale(sr);
                 final name = sr.device.platformName.isNotEmpty
                     ? sr.device.platformName
                     : '(未命名设备)';
@@ -1137,9 +1138,21 @@ class _ScaleSheetState extends State<ScaleSheet> {
                   title: Text(name),
                   subtitle: Text(sr.device.remoteId.str,
                       style: const TextStyle(fontSize: 11)),
-                  trailing: Text('${sr.rssi} dBm',
-                      style: const TextStyle(
-                          fontSize: 12, color: Colors.grey)),
+                  trailing: likely
+                      ? Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 3),
+                          decoration: BoxDecoration(
+                            color: const Color(kPrimaryColor).withOpacity(0.12),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text('疑似秤',
+                              style: TextStyle(
+                                  fontSize: 11,
+                                  color: Color(kPrimaryColor))))
+                      : Text('${sr.rssi} dBm',
+                          style: const TextStyle(
+                              fontSize: 12, color: Colors.grey)),
                   onTap: () => _svc.connect(sr.device),
                 );
               },

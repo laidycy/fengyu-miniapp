@@ -5,7 +5,10 @@ library;
 const String kApiBase = 'https://YOUR-API-DOMAIN/api';
 
 /// 应用版本号（单一来源：与 pubspec.yaml version 保持一致）
-const String kAppVersion = 'V0.0.5';
+const String kAppVersion = 'V0.0.5.4';
+
+/// 应用版本码（与 pubspec.yaml version 的 +N 一致，用于 App 内更新比较）
+const int kAppVersionCode = 10;
 
 /// 管理端路径前缀
 const String kAdminPrefix = '/admin';

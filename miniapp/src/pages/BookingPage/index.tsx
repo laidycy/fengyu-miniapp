@@ -206,8 +206,8 @@ export default function BookingPage() {
       const now = new Date()
       for (let i = 0; i < days; i++) {
         const d = new Date(now)
-        d.setDate(now.getDate() + i + 1)
-        // 明日及以后可预约（今日已不可约 -> 线上版从明天开始）
+        d.setDate(now.getDate() + i)
+        // 今日起可预约（含当日）
         const dateStr = fmtDate(d)
         list.push({
           date: dateStr,
@@ -225,7 +225,7 @@ export default function BookingPage() {
       const now = new Date()
       for (let i = 0; i < 7; i++) {
         const d = new Date(now)
-        d.setDate(now.getDate() + i + 1)
+        d.setDate(now.getDate() + i)
         list.push({
           date: fmtDate(d),
           week: weekdays[d.getDay()],
@@ -477,7 +477,7 @@ export default function BookingPage() {
                 </View>
               ))}
             </View>
-            <Text className='date-hint'>可预约未来{bookingOpenDays}天，每日22:00截止次日预约</Text>
+            <Text className='date-hint'>可预约今日起{bookingOpenDays}天</Text>
           </View>
         )}
 

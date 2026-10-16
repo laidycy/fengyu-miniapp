@@ -93,6 +93,36 @@ class AdminApi {
         members: members, total: total, page: page, pageSize: pageSize);
   }
 
+  /// 会员价格配置（等级名/价格/赠送积分）
+  /// 返回 {silver: {name, price, points}, ...}
+  Future<Map<String, Map<String, dynamic>>> getPricing() async {
+    final d = await api.get('$kAdminPrefix/pricing');
+    final m = (d as Map?)?.cast<String, dynamic>() ?? <String, dynamic>{};
+    final levels = <String, Map<String, dynamic>>{};
+    final list = (m['memberLevels'] as List?) ?? [];
+    for (final e in list) {
+      final j = e.cast<String, dynamic>();
+      levels[j['level']?.toString() ?? ''] = {
+        'name': j['name']?.toString() ?? '',
+        'price': j['price']?.toString() ?? '0',
+        'points': j['points']?.toString() ?? '0',
+      };
+    }
+    return levels;
+  }
+
+  /// 会员付费升级收款码（Native 微信扫码）
+  /// [level] silver/gold/diamond；[inviterUserId] 可选邀请人 user_id
+  Future<PayQr> generateUpgradePayQr(int memberId, String level,
+      {int? inviterUserId}) async {
+    final d = await api.post('$kAdminPrefix/members/$memberId/upgrade-pay-qr',
+        body: {
+          'level': level,
+          if (inviterUserId != null) 'inviterUserId': inviterUserId,
+        });
+    return PayQr.fromJson(((d as Map?)?.cast<String, dynamic>()) ?? {});
+  }
+
   /// 改会员等级
   Future<void> updateMemberLevel(int memberId, String level) async {
     await api.put('$kAdminPrefix/members/$memberId/level', body: {'level': level});

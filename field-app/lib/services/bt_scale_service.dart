@@ -150,28 +150,57 @@ class BtScaleService extends ChangeNotifier {
   }
 
   // ── 权限 ──────────────────────────────────────────────
-  Future<bool> _ensurePermissions() async {
-    if (!Platform.isAndroid) return true;
-    // Android 12+ 用 bluetoothScan/Connect；12 以下用定位权限。
-    final statuses = await [
-      Permission.bluetoothScan,
-      Permission.bluetoothConnect,
-      Permission.locationWhenInUse,
-    ].request();
-    final ok = (statuses[Permission.bluetoothScan]?.isGranted ?? true) &&
-        (statuses[Permission.bluetoothConnect]?.isGranted ?? true) &&
-        (statuses[Permission.locationWhenInUse]?.isGranted ?? true);
-    if (!ok) {
-      _error = '需要蓝牙与定位权限才能搜索电子秤，请在系统设置中开启';
-      notifyListeners();
-    }
-    return ok;
+  /// 只负责触发系统权限弹窗（首次使用必弹），**不根据返回状态硬性拦截**：
+  /// Android 12+（含鸿蒙4.x）只要「附近的设备」权限即可扫描，定位因 manifest
+  /// maxSdkVersion=30 在 12+ 上不被声明，permission_handler 会误报未授权，
+  /// 旧逻辑三项全过才放行 → 鸿蒙上被误杀。真正缺权限时由 startScan 抛错兜底。
+  Future<void> _requestPermissions() async {
+    if (!Platform.isAndroid) return;
+    try {
+      await [
+        Permission.bluetoothScan,
+        Permission.bluetoothConnect,
+        Permission.locationWhenInUse,
+      ].request();
+    } catch (_) {}
   }
 
   // ── 扫描 ──────────────────────────────────────────────
-  Future<void> startScan({Duration timeout = const Duration(seconds: 12)}) async {
+  // 鸿蒙4.x / 部分安卓ROM：服务端 128-bit UUID 过滤扫描会静默失败（不抛异常、返回空），
+  // 所以采用「全量扫描 + 客户端识别排序」策略（见 _rankResults）。
+  static final List<String> _scaleNameHints = [
+    'SCL', 'SCALE', 'WXL', 'QDI', 'T12', '电子秤',
+  ];
+
+  bool _looksLikeScale(ScanResult r) {
+    final adv = r.advertisementData;
+    if (adv.serviceUuids.contains(serviceUuid)) return true;
+    final name =
+        (adv.advName.isNotEmpty ? adv.advName : r.device.platformName)
+            .toUpperCase();
+    for (final h in _scaleNameHints) {
+      if (name.contains(h.toUpperCase())) return true;
+    }
+    return false;
+  }
+
+  /// 供 UI 给疑似秤加标记
+  bool isLikelyScale(ScanResult r) => _looksLikeScale(r);
+
+  List<ScanResult> _rankResults(List<ScanResult> results) {
+    final list = results.toList()
+      ..sort((a, b) {
+        final sa = _looksLikeScale(a) ? 0 : 1;
+        final sb = _looksLikeScale(b) ? 0 : 1;
+        if (sa != sb) return sa.compareTo(sb);
+        return b.rssi.compareTo(a.rssi);
+      });
+    return list;
+  }
+
+  Future<void> startScan({Duration timeout = const Duration(seconds: 15)}) async {
     _error = null;
-    if (!await _ensurePermissions()) return;
+    await _requestPermissions();
     if (!await FlutterBluePlus.isSupported) {
       _error = '当前设备不支持蓝牙';
       _status = BtScaleStatus.disconnected;
@@ -192,22 +221,28 @@ class BtScaleService extends ChangeNotifier {
 
     _scanSub?.cancel();
     _scanSub = FlutterBluePlus.scanResults.listen((results) {
-      // 只保留广播了目标服务或带秤名的设备；否则全部列出供人工选择
-      _scanResults = results;
+      // 全量接收，客户端识别/排序（鸿蒙兼容）
+      _scanResults = _rankResults(results);
       notifyListeners();
     });
 
+    // 不做服务端 128-bit UUID 过滤（鸿蒙4.x上会静默返回空），直接全量扫描
     try {
-      await FlutterBluePlus.startScan(
-        withServices: [serviceUuid],
-        timeout: timeout,
-      );
+      await FlutterBluePlus.startScan(timeout: timeout);
     } catch (_) {
-      // 部分秤广播不带 service uuid，退化为全量扫描
+      // 退化为 legacy 扫描 API（部分 HarmonyOS/老 ROM 上更稳，单次上限~12s）
       try {
-        await FlutterBluePlus.startScan(timeout: timeout);
+        await FlutterBluePlus.startScan(
+          timeout: const Duration(seconds: 12),
+          androidLegacy: true,
+        );
+        timeout = const Duration(seconds: 12);
       } catch (e) {
-        _error = '扫描失败：$e';
+        // 走到这里一般是权限/系统层面拒绝（SecurityException）
+        _error = '无法启动蓝牙扫描（$e）。请检查：'
+            '①系统设置 → 应用和服务 → 应用管理 → 丰鱼管理 → 权限，'
+            '允许「附近的设备」（鸿蒙）/ 蓝牙扫描、连接，以及「位置」权限 '
+            '②关闭其他正连着秤的手机/App';
         _status = BtScaleStatus.disconnected;
         notifyListeners();
         return;
@@ -215,10 +250,14 @@ class BtScaleService extends ChangeNotifier {
     }
 
     // 扫描结束复位
-    await Future.delayed(timeout + const Duration(milliseconds: 300));
+    await Future.delayed(timeout + const Duration(milliseconds: 500));
     if (_status == BtScaleStatus.scanning) {
       await stopScan();
       _status = BtScaleStatus.disconnected;
+      if (_scanResults.isEmpty) {
+        _error = '未搜到任何蓝牙设备。请检查：①秤已开机且蓝牙已开启 ②秤与手机在3米内 '
+            '③系统设置里已授予「附近的设备」和「位置」权限 ④已关闭其他连接着秤的手机/App';
+      }
       notifyListeners();
     }
   }

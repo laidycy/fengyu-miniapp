@@ -210,6 +210,9 @@ class Member {
   final String inviteCode;
   final String joinDate;
   final int inviteCount;
+  final String inviterNo;
+  final String inviterName;
+  final String inviterLevel;
 
   Member({
     required this.id,
@@ -223,6 +226,9 @@ class Member {
     required this.inviteCode,
     required this.joinDate,
     required this.inviteCount,
+    this.inviterNo = '',
+    this.inviterName = '',
+    this.inviterLevel = '',
   });
 
   factory Member.fromJson(Map<String, dynamic> j) => Member(
@@ -237,7 +243,17 @@ class Member {
         inviteCode: j['invite_code']?.toString() ?? '',
         joinDate: j['join_date']?.toString() ?? '',
         inviteCount: (j['invite_count'] as num?)?.toInt() ?? 0,
+        inviterNo: j['inviter_no']?.toString() ?? '',
+        inviterName: j['inviter_name']?.toString() ?? '',
+        inviterLevel: j['inviter_level']?.toString() ?? '',
       );
+
+  /// 当前邀请人展示（昵称/会员号）
+  String get inviterDisplay {
+    if (inviterName.isNotEmpty) return inviterName;
+    if (inviterNo.isNotEmpty) return inviterNo;
+    return '';
+  }
 }
 
 /// 渔获记录
@@ -427,6 +443,7 @@ class PayQr {
   final String? outTradeNo;
   final String? codeUrl;
   final bool alreadyPaid;
+  final String? memberLevel; // 会员升级收款的目标等级
 
   PayQr({
     required this.billNo,
@@ -435,15 +452,17 @@ class PayQr {
     this.outTradeNo,
     this.codeUrl,
     this.alreadyPaid = false,
+    this.memberLevel,
   });
 
   factory PayQr.fromJson(Map<String, dynamic> j) => PayQr(
-        // 渔获账单返回 billNo；渔具费用收款返回 orderNo（都用作单号展示）
-        billNo: (j['billNo'] ?? j['orderNo'])?.toString() ?? '',
+        // 渔获账单返回 billNo；渔具费用收款返回 orderNo；会员升级返回 memberNo
+        billNo: (j['billNo'] ?? j['orderNo'] ?? j['memberNo'])?.toString() ?? '',
         amount: j['amount']?.toString() ?? '0',
         qrcode: j['qrcode']?.toString() ?? '',
         outTradeNo: j['outTradeNo']?.toString(),
         codeUrl: j['code_url']?.toString(),
         alreadyPaid: j['alreadyPaid'] == true,
+        memberLevel: j['memberLevel']?.toString(),
       );
 }
