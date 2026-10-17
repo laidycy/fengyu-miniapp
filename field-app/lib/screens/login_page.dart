@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../api/api_client.dart';
 import '../config.dart';
+import '../services/credential_store.dart';
 
 class LoginPage extends StatefulWidget {
   final VoidCallback onLoginSuccess;
@@ -17,7 +18,25 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   bool _loading = false;
   bool _obscure = true;
+  bool _remember = true;
   String? _error;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedCredential();
+  }
+
+  /// 预填上次登录的账号密码（快捷登录）
+  Future<void> _loadSavedCredential() async {
+    final saved = await CredentialStore.load();
+    if (!mounted || saved == null) return;
+    setState(() {
+      _usernameCtrl.text = saved.username;
+      _passwordCtrl.text = saved.password;
+      _remember = true;
+    });
+  }
 
   @override
   void dispose() {
@@ -34,6 +53,12 @@ class _LoginPageState extends State<LoginPage> {
     });
     try {
       await api.login(_usernameCtrl.text.trim(), _passwordCtrl.text);
+      // 记住账号密码（加密存储）供下次快捷登录
+      if (_remember) {
+        await CredentialStore.save(_usernameCtrl.text.trim(), _passwordCtrl.text);
+      } else {
+        await CredentialStore.clear();
+      }
       if (!mounted) return;
       widget.onLoginSuccess();
     } on ApiException catch (e) {
@@ -121,6 +146,19 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     validator: (v) =>
                         (v == null || v.isEmpty) ? '请输入密码' : null,
+                  ),
+                  // 记住账号密码（快捷登录）
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: _remember,
+                        activeColor: const Color(kPrimaryColor),
+                        onChanged: (v) =>
+                            setState(() => _remember = v ?? false),
+                      ),
+                      const Text('记住账号密码，下次一键登录',
+                          style: TextStyle(fontSize: 13)),
+                    ],
                   ),
                   if (_error != null) ...[
                     const SizedBox(height: 12),
