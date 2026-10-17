@@ -92,7 +92,17 @@ export default function ProfilePage() {
   // 菜单点击
   const handleMenuClick = (item: any) => {
     if (item.action === 'contact') {
-      Taro.makePhoneCall({ phoneNumber: '13800000000' })
+      // 联系我们：客服 + 现场负责人 两个号码可选
+      Taro.showActionSheet({
+        itemList: ['客服电话 13800000000', '现场负责人（陈工）13800000001'],
+        success: (res) => {
+          if (res.tapIndex === 0) {
+            Taro.makePhoneCall({ phoneNumber: '13800000000' })
+          } else if (res.tapIndex === 1) {
+            Taro.makePhoneCall({ phoneNumber: '13800000001' })
+          }
+        }
+      })
     } else if (item.path) {
       Taro.navigateTo({ url: item.path })
     } else {
