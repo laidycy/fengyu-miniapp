@@ -74,6 +74,16 @@
   margin-left: 16rpx;
 }
 
+.recycle-tag {
+  font-size: 20rpx;
+  color: #1565C0;
+  background: #E3F2FD;
+  border: 1rpx solid #90CAF9;
+  border-radius: 8rpx;
+  padding: 2rpx 12rpx;
+  margin-left: 12rpx;
+}
+
 .catch-data {
   display: flex;
   flex-direction: column;
@@ -96,6 +106,34 @@
   &:last-child {
     margin-bottom: 0;
   }
+}
+
+/* 结算明细（福利鱼抵扣 / 超出斤数 × 单价） */
+.catch-detail {
+  margin-top: 10rpx;
+  padding: 10rpx 14rpx;
+  background: #F3F7F2;
+  border-radius: 8rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-line {
+  font-size: 23rpx;
+  color: #4E6B4F;
+  line-height: 1.6;
+}
+
+/* 渔获照片 */
+.catch-photo-wrap {
+  margin-top: 12rpx;
+}
+
+.catch-photo {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 10rpx;
+  background: #EEEEEE;
 }
 
 /* 未付账单横幅 */

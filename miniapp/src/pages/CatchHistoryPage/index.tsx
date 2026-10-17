@@ -1,13 +1,24 @@
 // 对齐线上 V0.0.5
 import { useState, useEffect, useCallback } from 'react'
-import { View, Text } from '@tarojs/components'
+import { View, Text, Image } from '@tarojs/components'
+import Taro from '@tarojs/taro'
 import { getCatchRecords } from '../../utils/api/catch'
 import { requireLogin } from '../../utils/login'
 import { useLoginModal } from '../../hooks/useLoginModal'
 import { payForCatchBill } from '../../utils/payment'
 import { showToast } from '../../utils/index'
+import { API_BASE_URL } from '../../utils/config'
 import type { CatchRecord } from '../../utils/types'
 import './index.scss'
+
+// 单价：后端未存单价，用「超出费用 ÷ 超出斤数」还原（回收单固定 5 元/斤）
+function calcUnitPrice(raw: any): number {
+  const ow = Number(raw?.over_weight) || 0
+  const fee = Number(raw?.extra_fee) || 0
+  if (ow > 0 && fee > 0) return Math.round((fee / ow) * 100) / 100
+  if (Number(raw?.is_recycle)) return 5
+  return 0
+}
 
 // 后端返回 snake_case，这里转成页面需要的 camelCase
 // SELECT cr.* + 关联 catch_bills(cb): over_weight / is_recycle / bill_id / bill_no / bill_status
@@ -21,10 +32,13 @@ function normalizeRecord(raw: any): CatchRecord {
     pointsEarned: Number(raw?.points_earned) || 0,
     // 后端 use_quota 是数字(实际抵扣福利鱼斤数)
     useQuota: Number(raw?.use_quota) > 0,
+    useQuotaWeight: Number(raw?.use_quota) || 0,
+    unitPrice: calcUnitPrice(raw),
     extraFee: Number(raw?.extra_fee) || 0,
     operatorId: String(raw?.operator_id ?? ''),
     remark: raw?.remark || '',
-    photo: raw?.photo || '',
+    // 照片后端存相对路径(/uploads/...)，拼完整域名才能显示
+    photo: raw?.photo ? `${API_BASE_URL}${raw.photo}` : '',
     overWeight: Number(raw?.over_weight) || 0,
     isRecycle: !!raw?.is_recycle,
     billId: raw?.bill_id != null ? Number(raw.bill_id) : undefined,
@@ -160,14 +174,33 @@ export default function CatchHistoryPage() {
                   {record.useQuota && (
                     <Text className='quota-tag'>福利鱼</Text>
                   )}
+                  {record.isRecycle ? (
+                    <Text className='recycle-tag'>回收</Text>
+                  ) : null}
                 </View>
                 <View className='catch-data'>
                   <Text className='catch-item'>⚖️ {record.weight} 斤</Text>
                   <Text className='catch-item'>📅 {formatDate(record.catchDate)}</Text>
-                  {record.overWeight && record.overWeight > 0 ? (
-                    <Text className='catch-item over'>超 {record.overWeight} 斤</Text>
-                  ) : null}
                 </View>
+                {/* 结算明细：福利鱼抵扣 / 超出斤数 × 单价 */}
+                {(record.useQuotaWeight || 0) > 0 ||
+                (record.overWeight || 0) > 0 ? (
+                  <View className='catch-detail'>
+                    {(record.useQuotaWeight || 0) > 0 ? (
+                      <Text className='detail-line'>
+                        🎁 福利鱼抵扣 {record.useQuotaWeight} 斤
+                      </Text>
+                    ) : null}
+                    {(record.overWeight || 0) > 0 ? (
+                      <Text className='detail-line'>
+                        {record.isRecycle ? '♻️ 回收' : '💰 超出'}{' '}
+                        {record.overWeight} 斤 × {record.unitPrice || 0} 元/斤
+                      </Text>
+                    ) : (
+                      <Text className='detail-line'>✅ 全部由福利鱼抵扣</Text>
+                    )}
+                  </View>
+                ) : null}
                 {record.remark ? (
                   <View className='catch-remark'>
                     <Text className='catch-item'>📝 {record.remark}</Text>
@@ -189,6 +222,24 @@ export default function CatchHistoryPage() {
                     <Text className='bill-btn'>
                       {payingId === record.billId ? '支付中...' : '去支付 →'}
                     </Text>
+                  </View>
+                ) : null}
+                {/* 渔获照片（点开看大图） */}
+                {record.photo ? (
+                  <View className='catch-photo-wrap'>
+                    <Image
+                      className='catch-photo'
+                      src={record.photo}
+                      mode='aspectFill'
+                      onClick={() =>
+                        Taro.previewImage({
+                          current: record.photo,
+                          urls: records
+                            .map(r => r.photo)
+                            .filter((u): u is string => !!u)
+                        })
+                      }
+                    />
                   </View>
                 ) : null}
               </View>

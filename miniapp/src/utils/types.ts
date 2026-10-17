@@ -126,6 +126,8 @@ export interface CatchRecord {
   catchDate: string
   pointsEarned: number
   useQuota: boolean       // 是否使用福利鱼额度
+  useQuotaWeight?: number // 福利鱼实际抵扣斤数
+  unitPrice?: number      // 单价(元/斤)
   extraFee?: number
   operatorId?: string
   remark?: string
